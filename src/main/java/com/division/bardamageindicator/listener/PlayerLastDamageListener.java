@@ -2,7 +2,6 @@ package com.division.bardamageindicator.listener;
 
 import com.division.bardamageindicator.constant.BarConstant;
 import com.division.bardamageindicator.data.BarManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,7 +33,7 @@ public class PlayerLastDamageListener implements Listener {
         else if (hitter instanceof Projectile) {
             Projectile projectile = (Projectile) hitter;
             if (projectile.getShooter() instanceof Player) {
-                handleDamage(hitter, victim, event.getFinalDamage());
+                handleDamage((Player)projectile.getShooter(), victim, event.getFinalDamage());
             }
         }
     }
