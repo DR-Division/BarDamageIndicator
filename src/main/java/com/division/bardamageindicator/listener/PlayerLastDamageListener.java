@@ -1,5 +1,6 @@
 package com.division.bardamageindicator.listener;
 
+import com.division.bardamageindicator.constant.BarConstant;
 import com.division.bardamageindicator.data.BarManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -30,7 +31,7 @@ public class PlayerLastDamageListener implements Listener {
             LivingEntity livingVictim = (LivingEntity) victim;
             double damage = event.getFinalDamage(); //최종데미지를 받는다
             manager.setBossBar(p, livingVictim, damage);
-            p.setMetadata("bar_indicate", new FixedMetadataValue(Plugin, System.currentTimeMillis())); //최종 엔티티 타격시간을 메타데이터에 저장.
+            p.setMetadata(BarConstant.BAR_META_KEY, new FixedMetadataValue(Plugin, System.currentTimeMillis())); //최종 엔티티 타격시간을 메타데이터에 저장.
         }
     }
 }
