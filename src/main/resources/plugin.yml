@@ -1,0 +1,5 @@
+name: BarDamageIndicator
+version: '${project.version}'
+main: com.division.bardamageindicator.BarDamageIndicator
+api-version: 1.19
+authors: [ Reincarnation__ ]
