@@ -28,13 +28,14 @@ public class BarManager {
         BossBar bar = getBossBar(uuid);
         String victimName;
         AttributeInstance instance = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        double victimHealth = victim.getHealth() - damage < 0 ? 0 : victim.getHealth() - damage;
         double victimMaxHealth = instance == null ? 20.0 : instance.getBaseValue();
         if (victim instanceof Player)
             victimName = victim.getName();
         else
             victimName = victim.getCustomName() != null ? victim.getCustomName() : victim.getName();
-        bar.setTitle("§f" + victimName + " §e" + roundDouble(victim.getHealth()) + "§e/" + victimMaxHealth + " §f(§c-" + roundDouble(damage) + "§f)");
-        bar.setProgress(parseBarProgress(victim.getHealth(), victimMaxHealth));
+        bar.setTitle("§f" + victimName + " §e" + roundDouble(victimHealth) + "§e/" + victimMaxHealth + " §f(§c-" + roundDouble(damage) + "§f)");
+        bar.setProgress(parseBarProgress(victimHealth, victimMaxHealth));
         if (!bar.getPlayers().contains(p))
             bar.addPlayer(p);
     }
