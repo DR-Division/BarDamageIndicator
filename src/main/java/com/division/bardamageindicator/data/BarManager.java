@@ -98,5 +98,11 @@ public class BarManager {
             }
             removeTargets.forEach(BarManager.this::removeBossBar);
         }
+
+        public void removeAll() {
+            for (UUID uuid : new HashSet<>(bossBarMap.keySet())) {
+                removeBossBar(uuid);
+            }
+        }
     }
 }

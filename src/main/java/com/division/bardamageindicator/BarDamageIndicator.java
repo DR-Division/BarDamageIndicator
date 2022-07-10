@@ -9,17 +9,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BarDamageIndicator extends JavaPlugin {
 
+    private BarManager.BarRemover remover;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         BarManager manager = new BarManager();
         getServer().getPluginManager().registerEvents(new PlayerLastDamageListener(manager, this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(manager), this);
-        Bukkit.getScheduler().runTaskTimer(this, manager.new BarRemover(), 0L, BarConstant.BAR_REMOVER_INTERVAL);
+        remover = manager.new BarRemover();
+        Bukkit.getScheduler().runTaskTimer(this, remover, 0L, BarConstant.BAR_REMOVER_INTERVAL);
     }
 
     @Override
     public void onDisable() {
+        remover.removeAll();
         // Plugin shutdown logic
     }
 }
