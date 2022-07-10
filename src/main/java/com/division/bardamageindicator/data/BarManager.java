@@ -61,7 +61,7 @@ public class BarManager {
     }
 
     //보스바 제거전용 내부클래스
-    class BarRemover implements Runnable {
+    public class BarRemover implements Runnable {
         @Override
         public void run() {
             for (UUID uuid : bossBarMap.keySet()) {
