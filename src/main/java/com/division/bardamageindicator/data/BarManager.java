@@ -33,7 +33,8 @@ public class BarManager {
             victimName = victim.getName();
         else
             victimName = victim.getCustomName() != null ? victim.getCustomName() : victim.getName();
-        bar.setTitle("§f" + victimName + " §e" + victim.getHealth() + "§e/" + victimMaxHealth + " §f(§c-" + damage + "§f)");
+        bar.setTitle("§f" + victimName + " §e" + roundDouble(victim.getHealth()) + "§e/" + victimMaxHealth + " §f(§c-" + roundDouble(damage) + "§f)");
+        bar.setProgress(parseBarProgress(victim.getHealth(), victimMaxHealth));
         if (!bar.getPlayers().contains(p))
             bar.addPlayer(p);
     }
@@ -52,6 +53,24 @@ public class BarManager {
         else
             bar = putBossBar(uuid);
         return bar;
+    }
+
+    private double parseBarProgress(double health, double maxHealth) {
+        if (maxHealth == 0)
+            return 0.0;
+        else {
+            double value = health / maxHealth;
+            if (value < 0)
+                return 0.0;
+            else if (value > 1)
+                return 1.0;
+            else
+                return value;
+        }
+    }
+
+    private double roundDouble(double value) {
+        return Math.round(value * 100) / 100.0;
     }
 
     private BossBar putBossBar(UUID uuid) {
@@ -73,7 +92,7 @@ public class BarManager {
                     if (value != null) {
                         long lastAttackTime = value.asLong();
                         if (System.currentTimeMillis() - lastAttackTime >= BarConstant.BAR_REMOVE_DELAY)
-                            bossBarMap.remove(uuid);
+                            removeBossBar(uuid);
                     }
                 }
             }
