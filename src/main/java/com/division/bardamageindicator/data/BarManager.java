@@ -11,9 +11,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class BarManager {
 
@@ -84,6 +82,7 @@ public class BarManager {
     public class BarRemover implements Runnable {
         @Override
         public void run() {
+            List<UUID> removeTargets = new ArrayList<>();
             for (UUID uuid : bossBarMap.keySet()) {
                 Player p = Bukkit.getPlayer(uuid);
                 if (p == null)
@@ -93,10 +92,11 @@ public class BarManager {
                     if (value != null) {
                         long lastAttackTime = value.asLong();
                         if (System.currentTimeMillis() - lastAttackTime >= BarConstant.BAR_REMOVE_DELAY)
-                            removeBossBar(uuid);
+                            removeTargets.add(uuid);
                     }
                 }
             }
+            removeTargets.forEach(BarManager.this::removeBossBar);
         }
     }
 }
